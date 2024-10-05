@@ -1,0 +1,28 @@
+.custom-table {
+    width: 100%; /* Full width */
+    min-width: 600px; /* Adjust this as needed to fit your content */
+    overflow-x: auto; /* Allow horizontal scrolling */
+  }
+  
+  .custom-table-row {
+    display: flex; /* Use flexbox for the row */
+    align-items: center;
+  }
+  
+  .custom-table-cell {
+    flex: 1; /* Distribute space evenly */
+    padding: 8px;
+    white-space: nowrap; /* Prevent text wrapping in cells */
+  }
+  
+  .first-column {
+    flex: 0 0 250px; /* Fixed width for the first column */
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  .appIcon {
+    width: 40px;
+    height: 40px;
+  }
+  
