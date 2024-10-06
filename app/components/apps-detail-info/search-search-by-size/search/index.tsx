@@ -1,74 +1,32 @@
-import {Autocomplete, Icon} from '@shopify/polaris';
+import { Icon, TextField} from '@shopify/polaris';
 import {SearchIcon} from '@shopify/polaris-icons';
-import {useState, useCallback, useMemo} from 'react';
+import { RootState } from 'app/initial-data';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchQuery } from 'app/actions';
+import { useState } from 'react';
 
 export default  function SearchAutoComplete() {
-  const deselectedOptions = useMemo(
-    () => [
-      {value: 'rustic', label: 'Rustic'},
-      {value: 'antique', label: 'Antique'},
-      {value: 'vinyl', label: 'Vinyl'},
-      {value: 'vintage', label: 'Vintage'},
-      {value: 'refurbished', label: 'Refurbished'},
-    ],
-    [],
-  );
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState('');
-  const [options, setOptions] = useState(deselectedOptions);
+  
+  const search_query = useSelector((state:RootState) => state.search_query)
 
-  const updateText = useCallback(
-    (value: string) => {
-      setInputValue(value);
+  const dispatch = useDispatch();
 
-      if (value === '') {
-        setOptions(deselectedOptions);
-        return;
-      }
+  const [input_value, setInputValue] = useState('')
 
-      const filterRegex = new RegExp(value, 'i');
-      const resultOptions = deselectedOptions.filter((option) =>
-        option.label.match(filterRegex),
-      );
-      setOptions(resultOptions);
-    },
-    [deselectedOptions],
-  );
+  const handleQueryChange = (value: string) => {
+    setInputValue(value); 
+    dispatch(setSearchQuery(value))
+  };
 
-  const updateSelection = useCallback(
-    (selected: string[]) => {
-      const selectedValue = selected.map((selectedItem) => {
-        const matchedOption = options.find((option) => {
-          return option.value.match(selectedItem);
-        });
-        return matchedOption && matchedOption.label;
-      });
-
-      setSelectedOptions(selected);
-      setInputValue(selectedValue[0] || '');
-    },
-    [options],
-  );
-
-  const textField = (
-    <Autocomplete.TextField
-      onChange={updateText}
-      label=""
-      value={inputValue}
+  return (
+    <TextField
+      onChange={handleQueryChange}
+      label={''}
+      value={input_value}
       prefix={<Icon source={SearchIcon} tone="base" />}
       placeholder="Search"
       autoComplete="off"
     />
   );
 
-  return (
-    <div>
-      <Autocomplete
-        options={options}
-        selected={selectedOptions}
-        onSelect={updateSelection}
-        textField={textField}
-      />
-    </div>
-  );
 }

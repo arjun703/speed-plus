@@ -13,7 +13,6 @@ export default function Analytics(){
       <CustomTabs />
       <Page>
         <BlockStack gap={'500'}>
-          <Counter />
           <AnalysisOverview />
           <AppsDetailInfo />
           <AppAnalysisAtGlance /> 

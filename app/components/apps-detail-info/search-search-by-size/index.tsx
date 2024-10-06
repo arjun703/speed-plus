@@ -1,7 +1,12 @@
+import { useSelector } from "react-redux";
 import SearchAutoComplete from "./search";
 import SortBySize from "./sort-by-size";
+import { RootState } from "app/initial-data";
 
 export default function SearchAndSortBySize(){
+
+    const  num_installed_apps = useSelector((state:RootState) => state.installed_apps.length)    
+
     return(
         <>
             <div className="d-flex align-items-center justify-content-between">
@@ -10,7 +15,7 @@ export default function SearchAndSortBySize(){
                         Installed Apps
                     </div>
                     <div>
-                        (10)
+                        ({num_installed_apps})
                     </div>
                 </div>
                 <div className="d-none d-md-flex align-items-center g-5">

@@ -2,13 +2,10 @@ import { Collapsible } from "@shopify/polaris";
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 
-export default function URLsListItem(){
+export default function URLsListItem({url, app_name, page}:any){
 
     const [isURLdescriptionOpen,  setIsURLdescriptionOpen] = useState(false)
     const toggleURLsListVisibility = () => setIsURLdescriptionOpen(!isURLdescriptionOpen)
-
-
-
     return (
         <>
             <div 
@@ -18,18 +15,17 @@ export default function URLsListItem(){
             >
                 {/* Fixed width for 3rd Party Apps column */}
                 <div className="urls-list-row-item url-link-and-desc">
-                    http://www.faxquote.faxquotefaxquote.comfaxquote.comfaxquote.com
+                    {app_name} - {page} - {url.url}
                 </div>
-                
                 {/* Flexible columns */}
                 <div className="urls-list-row-item flex-1">
-                    1KB
+                    {url.transfer_size}
                 </div>
                 <div className="urls-list-row-item flex-1">
-                    1ms
+                    {url.total_cpu_time}
                 </div>
                 <div className="urls-list-row-item flex-1">
-                    5ms
+                    {url.script_evaluation}
                 </div>
             </div>
             <Collapsible

@@ -10,9 +10,8 @@ export default function SortBySize() {
   );
 
   const options = [
-    {label: 'Today', value: 'today'},
-    {label: 'Yesterday', value: 'yesterday'},
-    {label: 'Last 7 days', value: 'lastWeek'},
+    {label: 'Transfer Size Ascending', value: 'transfer_size_ascending'},
+    {label: 'Transfer Size Descending', value: 'transfer_size_descending'},
   ];
 
   return (

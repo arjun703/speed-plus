@@ -1,18 +1,11 @@
 // store.js
 import { createStore } from 'redux';
-import { installed_apps } from './initial-data/installed_apps';
-import { analysis_overview } from './initial-data/analysis_overview';
-
-// Initial state
-const initialState = {
-    analysis_overview: analysis_overview,
-    sort_by_device_type: 'desktop',
-    installed_apps:  installed_apps,
-    count: 0,
-};
+import { initialState } from './initial-data';
+import { generateAnalysisOverview } from './initial-data/analysis_overview';
 
 // Reducer function
 const counterReducer = (state = initialState, action: any) => {
+
     switch (action.type) {
 
         case 'INCREMENT':
@@ -26,7 +19,19 @@ const counterReducer = (state = initialState, action: any) => {
                 ...state,
                 sort_by_device_type: state.sort_by_device_type === 'desktop' ? 'mobile' : 'desktop',
             }; 
-            
+
+        case 'SET_SEARCH_QUERY':
+            return {
+                ...state,
+                search_query: action.new_search_query
+            }
+        
+        case 'RERUN_APP_ANALYSIS':
+            return{
+                ...state,
+                analysis_overview: generateAnalysisOverview()
+            }
+
         default:
             return state;
   }

@@ -21,21 +21,26 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 import { Tab, tabsData } from "app/components/tabbed-navigation/tab-data";
 
-
 import { Provider as ReduxProvider } from 'react-redux';
 import store from "app/store";
+
+import i18n from './../i18n'; // Import your i18n configuration
+import { I18nextProvider } from 'react-i18next';
+
 
 export default function App() {
   const { apiKey } = useLoaderData<typeof loader>();
 
   return (
     <AppProvider isEmbeddedApp apiKey={apiKey}>
-      <ReduxProvider store={store}>
-        <NavMenu>
-          { tabsData.map((tab, index) => <Link key={index} to={tab.path}>{tab.name}</Link> ) }
-        </NavMenu>
-        <Outlet />
-      </ReduxProvider>
+      <I18nextProvider i18n={i18n}>
+        <ReduxProvider store={store}>
+            <NavMenu>
+              { tabsData.map((tab, index) => <Link key={index} to={tab.path}>{tab.name}</Link> ) }
+            </NavMenu>
+            <Outlet />
+        </ReduxProvider>
+      </I18nextProvider>
     </AppProvider>
   );
 }

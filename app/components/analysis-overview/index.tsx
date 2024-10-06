@@ -1,36 +1,37 @@
-import {Page, Grid, Card, Icon, BlockStack} from '@shopify/polaris';
-import React from 'react';
-
+import { Grid, Card, Icon, BlockStack} from '@shopify/polaris';
 import {DragHandleIcon} from '@shopify/polaris-icons';
-
-interface AppOverview{
-    title: string;
-    value: number;
-    unit?: string;
-}
-
 import AppAnalysisHeader from './app-analysis-header';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleSortByDeviceType } from 'app/actions';
+import { RootState } from 'app/initial-data';
+import {  ClockIcon } from '@shopify/polaris-icons';
+import { AppsFilledIcon } from '@shopify/polaris-icons';
 
 export default function AnalysisOverview() {
+
+    const { analysis_overview:{insights} } = useSelector((state:RootState) => state)
+    
+    const dispatch = useDispatch();
+    
   return (
     <>
         <AppAnalysisHeader />
         <Grid>
             {
-                [1,2,3,4].map((value, index) => {
+                insights.map(({param, value, unit}, index) => {
                     return(
                         <>
                             <Grid.Cell columnSpan={{xs: 6, sm: 6, md: 3}}>
                                 <Card>
                                     <BlockStack gap={'200'}>
-                                        <p className="app-analysis-overview-title">Installed apps</p>
+                                        <p className="app-analysis-overview-title">{param}</p>
                                         <div className='d-flex justify-content-between align-items-center'>
                                             <div className='app-analysis-overview-value'>
-                                                <span>12</span>
-                                                <sup className='app-analysis-overview-value-unit'>ms</sup>
+                                                <span>{value}</span>
+                                                 <sup className='app-analysis-overview-value-unit'>{unit !== undefined ? unit : ''}</sup>
                                             </div>
-                                            <div className='app-analysis-overview-icon'>
-                                                <Icon source={DragHandleIcon} tone='base'></Icon>
+                                            <div className='d-flex justify-content-center app-analysis-overview-icon'>
+                                                {returnIcon(index)}
                                             </div>
                                         </div>
                                     </BlockStack>
@@ -43,4 +44,16 @@ export default function AnalysisOverview() {
         </Grid>
     </>
   );
+}
+
+
+function returnIcon(index:number){
+    switch(index){
+        case 0:
+            return <Icon source={DragHandleIcon}></Icon>
+        case 1:
+            return <Icon source={AppsFilledIcon}></Icon>
+        default:
+            return <Icon source={ClockIcon} ></Icon>                             
+    }
 }

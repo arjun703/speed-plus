@@ -28,9 +28,42 @@ export const installed_apps:InstalledAppType[] = [
     {
         severity: 'normal',
 
-        app_logo_url: 'https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png',
+        app_logo_url: 'https://w7.pngwing.com/pngs/959/454/png-transparent-tiktok-logo-thumbnail.png',
 
-        app_name: 'Stamped.io',
+        app_name: 'TikTok',
+        
+        transfer_size: {
+            value: 3,
+            unit: 'KiB'
+        },
+        
+        last_usage: '1h ago',
+        
+        average_load_time: {
+            
+            desktop: {
+                value: 100,
+                unit: 'ms'
+            },
+            
+            mobile: {
+                value: 15,
+                unit: 'ms'
+            }
+
+        },
+        
+
+        app_handle: 'stamped_io'
+
+    },	    
+    
+    {
+        severity: 'normal',
+
+        app_logo_url: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png?20160129083321',
+
+        app_name: 'Pinterest',
         
         transfer_size: {
             value: 43,
@@ -42,7 +75,7 @@ export const installed_apps:InstalledAppType[] = [
         average_load_time: {
             
             desktop: {
-                value: 1,
+                value: 255,
                 unit: 'ms'
             },
             
@@ -65,14 +98,14 @@ export const installed_apps:InstalledAppType[] = [
 
         app_logo_url: 'https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png',
 
-        app_name: 'Stamped.io',
+        app_name: 'Google',
         
         transfer_size: {
-            value: 11,
+            value: 111,
             unit: 'KiB'
         },
         
-        last_usage: '1h ago',
+        last_usage: '8h ago',
         
         average_load_time: {
         

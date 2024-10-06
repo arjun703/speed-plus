@@ -1,10 +1,12 @@
 
 import { Collapsible, Icon } from '@shopify/polaris';
 import {ChevronDownIcon, ChevronUpIcon} from '@shopify/polaris-icons';
-import { AlertTriangleIcon } from '@shopify/polaris-icons';
+import { AlertTriangleIcon, CheckCircleIcon,InfoIcon } from '@shopify/polaris-icons';
 import { useState } from 'react';
 import URLSlist from './urls-list';
 import { InstalledAppType } from 'app/initial-data/installed_apps';
+import { useSelector } from 'react-redux';
+import { RootState } from 'app/initial-data';
 
 // Define the props interface for the AppItem component
 interface AppItemProps {
@@ -13,9 +15,22 @@ interface AppItemProps {
 
 export default function AppItem({installed_app}: AppItemProps) {
 
+    const sort_by_device_type = useSelector((state:RootState) => state.sort_by_device_type)
+
     const [isURLsListOpen,  setIsURLsListOpen] = useState(false)
 
     const toggleURLsListVisibility = () => setIsURLsListOpen(!isURLsListOpen)
+
+    const iconBasedOnSeverity  = (severity:'info' | 'normal' | 'critical' ) => {
+        switch(severity){
+            case 'info':
+                return <Icon source={InfoIcon} tone={'info'} />
+            case 'normal':
+                return <Icon source={CheckCircleIcon} tone={'success'} />
+            case 'critical':
+                return <Icon source={AlertTriangleIcon} tone={'critical'} />
+        }
+    } 
 
     return (
         <>
@@ -27,26 +42,26 @@ export default function AppItem({installed_app}: AppItemProps) {
                 {/* Fixed width for 3rd Party Apps column */}
                 <div className="app-list-row-item d-flex g-5 align-items-center third-party-apps">
                     <img
-                        src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                        src={installed_app.app_logo_url}
                         className="app-icon"
                     />
                     <span className="app-name">
-                        Stamped.io - 
+                        {installed_app.app_name}
                     </span>
                 </div>
                 
                 <div className="app-list-row-item flex-1">
-                    1KB
+                    {installed_app.transfer_size.value} {installed_app.transfer_size.unit}
                 </div>
                 <div className="app-list-row-item flex-1">
-                    3s
+                    {installed_app.last_usage}
                 </div>
                 <div className="app-list-row-item flex-1">
-                   5ms
+                    {installed_app.average_load_time[sort_by_device_type].value}{installed_app.average_load_time[sort_by_device_type].unit}
                 </div>
                 
                 <div className="app-list-row-item" style={{ width: '80px' }}>
-                    <Icon source={AlertTriangleIcon} tone={'critical'} />
+                    {iconBasedOnSeverity(installed_app.severity)}
                 </div>
                 <div className="app-list-row-item" style={{ width: '80px' }}>
                     <Icon source={!isURLsListOpen ?  ChevronDownIcon : ChevronUpIcon } tone="base" />
@@ -61,7 +76,7 @@ export default function AppItem({installed_app}: AppItemProps) {
                 expandOnPrint
             >
                 <div style={{paddingBottom: '30px', paddingLeft:'30px'}}>
-                    <URLSlist />
+                    <URLSlist  app_name={installed_app.app_handle}/>
                 </div>
             </Collapsible>
         </>
