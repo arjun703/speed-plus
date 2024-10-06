@@ -4,7 +4,7 @@ export async function loader() {
     await (new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(true)
-        }, 2000);
+        }, 100);
     }))
 
     return json(
