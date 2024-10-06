@@ -1,16 +1,25 @@
 import { BlockStack, Page } from "@shopify/polaris";
-import AppList from "./../components/app-list";
-import AppAnalysis from "app/components/analysis-overview";
-import AnalysisHeader from "app/components/analysis-header";
+import CustomTabs from "app/components/tabbed-navigation";
+import AnalysisOverview from "app/components/analysis-overview";
+import AppsDetailInfo from "app/components/apps-detail-info";
+import AppAnalysisAtGlance from "app/components/at-glance";
+import FeatureRequestForm from "app/components/feature-request-form";
+import Counter from "app/components/counter";
 
 export default function Analytics(){
+
   return(
-    <Page>
-      <BlockStack gap={'300'}>
-        <AnalysisHeader />
-        <AppAnalysis />
-        <AppList />
-      </BlockStack>
-    </Page>
+    <>
+      <CustomTabs />
+      <Page>
+        <BlockStack gap={'500'}>
+          <Counter />
+          <AnalysisOverview />
+          <AppsDetailInfo />
+          <AppAnalysisAtGlance /> 
+          <FeatureRequestForm />
+        </BlockStack>
+      </Page>
+    </>
   )
 }

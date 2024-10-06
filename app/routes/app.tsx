@@ -6,7 +6,8 @@ import { AppProvider } from "@shopify/shopify-app-remix/react";
 import { NavMenu } from "@shopify/app-bridge-react";
 import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
 
-import './../styles/custom-styles.css';
+import './../custom-styles/index.css'
+import './../custom-styles/responsive.css'
 
 import { authenticate } from "../shopify.server";
 
@@ -18,18 +19,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ apiKey: process.env.SHOPIFY_API_KEY || "" });
 };
 
+import { Tab, tabsData } from "app/components/tabbed-navigation/tab-data";
+
+
+import { Provider as ReduxProvider } from 'react-redux';
+import store from "app/store";
+
 export default function App() {
   const { apiKey } = useLoaderData<typeof loader>();
 
   return (
     <AppProvider isEmbeddedApp apiKey={apiKey}>
-      <NavMenu>
-        <Link to="/app" rel="home">
-          Home
-        </Link>
-        <Link to="/app/additional">Additional page</Link>
-      </NavMenu>
-      <Outlet />
+      <ReduxProvider store={store}>
+        <NavMenu>
+          { tabsData.map((tab, index) => <Link key={index} to={tab.path}>{tab.name}</Link> ) }
+        </NavMenu>
+        <Outlet />
+      </ReduxProvider>
     </AppProvider>
   );
 }

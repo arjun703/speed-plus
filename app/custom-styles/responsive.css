@@ -1,0 +1,23 @@
+.d-block{
+    display:block;
+}
+.d-none{
+    display: none;
+}
+
+/* Media query for tablets and above (like desktop) */
+@media (min-width: 768px) {
+    .app-list-row-item.third-party-apps, .urls-list-row-item.url-link-and-desc {
+        width: 336px;
+    }
+    .d-md-block{
+        display: block;
+    }
+    .d-md-none{
+        display: none;
+    }
+    .d-md-flex{
+        display: flex;
+    }
+}
+

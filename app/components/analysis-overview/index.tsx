@@ -1,43 +1,46 @@
+import {Page, Grid, Card, Icon, BlockStack} from '@shopify/polaris';
 import React from 'react';
-import { Card, Grid, Text, Button, TextContainer } from '@shopify/polaris';
 
-// Define the interface for the app analysis data
-interface AppAnalysisData {
+import {DragHandleIcon} from '@shopify/polaris-icons';
+
+interface AppOverview{
     title: string;
-    value: string | number;
+    value: number;
     unit?: string;
 }
 
-// Sample data for the app analysis
-const appAnalysisData: AppAnalysisData[] = [
-    { title: 'Installed Apps', value: 10 },
-    { title: 'Transfer size', value: 458, unit: 'KiB' },
-    { title: 'Main-Thread Blocking Time', value: 10, unit: 'ms' },
-    { title: 'Total Load time for all apps', value: 2.8, unit: 's' },
-];
+import AppAnalysisHeader from './app-analysis-header';
 
-// Main functional component for App Analysis
-const AppAnalysis: React.FC = () => {
-    return (
-        <>
-            <div>
-                <Grid>
-                    {appAnalysisData.map((item, index) => (
-                        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}} key={index}>
-                            <Card>
-                                <TextContainer>
-                                    <div>{item.title}</div>
-                                    <div>
-                                        {item.value} {item.unit && <sup style={{ fontSize: '0.8em', verticalAlign: 'super' }}>{item.unit}</sup>}
-                                    </div>
-                                </TextContainer>
-                            </Card>
-                        </Grid.Cell>
-                    ))}
-                </Grid>
-            </div>
-        </>
-    );
-};
-
-export default AppAnalysis;
+export default function AnalysisOverview() {
+  return (
+    <>
+        <AppAnalysisHeader />
+        <Grid>
+            {
+                [1,2,3,4].map((value, index) => {
+                    return(
+                        <>
+                            <Grid.Cell columnSpan={{xs: 6, sm: 6, md: 3}}>
+                                <Card>
+                                    <BlockStack gap={'200'}>
+                                        <p className="app-analysis-overview-title">Installed apps</p>
+                                        <div className='d-flex justify-content-between align-items-center'>
+                                            <div className='app-analysis-overview-value'>
+                                                <span>12</span>
+                                                <sup className='app-analysis-overview-value-unit'>ms</sup>
+                                            </div>
+                                            <div className='app-analysis-overview-icon'>
+                                                <Icon source={DragHandleIcon} tone='base'></Icon>
+                                            </div>
+                                        </div>
+                                    </BlockStack>
+                                </Card>
+                            </Grid.Cell>
+                        </>
+                    )
+                })
+            }
+        </Grid>
+    </>
+  );
+}
